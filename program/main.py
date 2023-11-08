@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import random as rnd
+from collections import deque
 
 
 def create(length, max_value):
@@ -16,23 +17,20 @@ def merge_sort(arr):
         middle = len(arr) // 2
         left, inv_left = merge_sort(arr[:middle])
         right, inv_right = merge_sort(arr[middle:])
-        merged, inv_merge = merge(left, right)
+        merged, inv_merge = merge(deque(left), deque(right))
         return merged, inv_left + inv_right + inv_merge
 
 def merge(left, right):
     merged = []
     inv_count = 0
-    i = j = 0
-    while i < len(left) and j < len(right):
-        if left[i] <= right[j]:
-            merged.append(left[i])
-            i += 1
+    while left and right:
+        if left[0] <= right[0]:
+            merged.append(left.popleft())
         else:
-            merged.append(right[j])
-            inv_count += len(left) - i
-            j += 1
-    merged += left[i:]
-    merged += right[j:]
+            merged.append(right.popleft())
+            inv_count += len(left)
+    merged.extend(left)
+    merged.extend(right)
     return merged, inv_count
 
 
