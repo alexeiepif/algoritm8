@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+
 import random as rnd
 from collections import deque
 
@@ -9,6 +10,7 @@ def create(length, max_value):
     unique_numbers = list(range(max_value))
     rnd.shuffle(unique_numbers)
     return unique_numbers[:length]
+
 
 def merge_sort(arr):
     if len(arr) <= 1:
@@ -19,6 +21,7 @@ def merge_sort(arr):
         right, inv_right = merge_sort(arr[middle:])
         merged, inv_merge = merge(deque(left), deque(right))
         return merged, inv_left + inv_right + inv_merge
+
 
 def merge(left, right):
     merged = []
